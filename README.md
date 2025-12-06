@@ -24,7 +24,7 @@ import unittest       # For testing
 
 ## Background
 This project is an improved version of the word changer game from assignment 5 in the Basic Programming (Python) course.
-The user interaction is through a GUI instead of theough the command line.
+The user interaction is through a GUI instead of through the command line.
 Additionally, at the end of each game the user has an option to save the the results to a file to keep track.
 
 ## AI prompts (Visual Studio Code copilot GPT-4.1)
