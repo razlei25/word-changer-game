@@ -4,54 +4,54 @@ def is_valid_change(word1, word2):
        return False
    return sum(1 for a, b in zip(word1, word2) if a != b) == 1
 
-while True:
-    try:
-        word_length = int(input("Welcome to the Word Ladder Game! How many letters will your words have? ").strip())
-        if word_length <= 0:
-            print("Please enter an integer greater than 0.")
-            continue
-        break
-    except ValueError:
-        print("Invalid input. Please enter an integer greater than 0.")
 
-while True:
-    start_word = input(f"Enter the starting word (must be {word_length} letters): ").lower().strip()
-    if not isinstance(start_word, str) or not start_word:
-        print("Words must be strings. Try again.")
-        continue
-    if not start_word.isalpha():
-        print("Words must contain only letters. Try again.")
-        continue
-    if len(start_word) != word_length:
-        print(f"Start word must be exactly {word_length} letters. Try again.")
-        continue
-    break
+class WordLadderGame:
+    def __init__(self, word_length, start_word, goal_word):
+        self.word_length = word_length
+        self.start_word = start_word.lower().strip()
+        self.goal_word = goal_word.lower().strip()
+        self.current_word = self.start_word
+        self.moves = [self.start_word]
 
-while True:
-    goal_word = input(f"Enter the goal word (must be {word_length} letters): ").lower().strip()
-    if not isinstance(goal_word, str) or not goal_word:
-        print("Words must be strings. Try again.")
-        continue
-    if not goal_word.isalpha():
-        print("Words must contain only letters. Try again.")
-        continue
-    if goal_word == start_word:
-        print("Goal word must be different from the start word. Try again.")
-        continue
-    if len(goal_word) != word_length:
-        print(f"Goal word must be exactly {word_length} letters. Try again.")
-        continue
-    break
-current_word = start_word
+    def validate_word(self, word):
+        word = word.lower().strip()
+        if not isinstance(word, str) or not word:
+            return False, "Words must be strings."
+        if not word.isalpha():
+            return False, "Words must contain only letters."
+        if len(word) != self.word_length:
+            return False, f"Word must be exactly {self.word_length} letters."
+        return True, ""
 
-print(f"Word Ladder Game! Transform '{start_word}' to '{goal_word}' one letter at a time.")
+    def validate_start_and_goal(self):
+        valid_start, msg_start = self.validate_word(self.start_word)
+        valid_goal, msg_goal = self.validate_word(self.goal_word)
+        if not valid_start:
+            return False, f"Start word error: {msg_start}"
+        if not valid_goal:
+            return False, f"Goal word error: {msg_goal}"
+        if self.start_word == self.goal_word:
+            return False, "Goal word must be different from the start word."
+        return True, ""
 
-while current_word != goal_word:
-   new_word = input(f"Enter a word that changes one letter in '{current_word}': ").lower()
+    def make_move(self, new_word):
+        new_word = new_word.lower().strip()
+        valid, msg = self.validate_word(new_word)
+        if not valid:
+            return False, msg
+        if not is_valid_change(self.current_word, new_word):
+            return False, "Invalid move! Your word must change exactly one letter."
+        self.current_word = new_word
+        self.moves.append(new_word)
+        return True, ""
 
-   if not is_valid_change(current_word, new_word):
-       print("Invalid move! Your word must change exactly one letter.")
-   else:
-       current_word = new_word
+    def is_finished(self):
+        return self.current_word == self.goal_word
 
-print(f"Congratulations! You turned '{start_word}' into '{goal_word}'!")
+    def get_state(self):
+        return {
+            'current_word': self.current_word,
+            'goal_word': self.goal_word,
+            'moves': self.moves.copy(),
+            'finished': self.is_finished()
+        }
