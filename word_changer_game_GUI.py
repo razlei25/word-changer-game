@@ -67,7 +67,35 @@ class WordLadderGUI:
             self.move_var.set("")
             if state['finished']:
                 messagebox.showinfo("Congratulations!", f"You turned '{state['moves'][0]}' into '{state['goal_word']}' in {len(state['moves'])-1} moves!")
-                self.setup_start_screen()
+                self.ask_save_results(state)
+
+    def ask_save_results(self, state):
+        answer = messagebox.askyesno("Save Results", "Would you like to save your game results to a .txt file?")
+        if answer:
+            import os
+            from tkinter import filedialog
+            default_filename = "word_changer_game_results.txt"
+            downloads = os.path.join(os.path.expanduser("~"), "Downloads")
+            initialfile = default_filename
+            initialdir = downloads if os.path.exists(downloads) else os.path.expanduser("~")
+            file_path = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                initialfile=initialfile,
+                initialdir=initialdir,
+                title="Save Game Results",
+                filetypes=[("Text Files", "*.txt")]
+            )
+            if file_path:
+                try:
+                    with open(file_path, "w", encoding="utf-8") as f:
+                        f.write("Word changer game results\n")
+                        f.write(f"Start word: {state['moves'][0]}\n")
+                        f.write(f"Goal word: {state['goal_word']}\n")
+                        f.write(f"Number of turns: {len(state['moves'])-1}\n")
+                    messagebox.showinfo("Saved", f"Results saved to {file_path}")
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to save file: {e}")
+        self.setup_start_screen()
 
 if __name__ == "__main__":
     root = tk.Tk()
