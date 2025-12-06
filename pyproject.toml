@@ -5,7 +5,4 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = [
-	"tkinter; sys_platform == 'win32' or sys_platform == 'darwin' or sys_platform == 'linux'",
-	"unittest"
-]
+dependencies = []
