@@ -5,6 +5,13 @@
 
 Run the program in `word_changer_game_GUI.py`
 
+
+## Example
+Start:
+![Start of game example](C:\Users\Raz\Downloads\Screenshot 2025-12-06 223126 1.png)
+End:
+![End of game example](C:\Users\Raz\Downloads\Screenshot 2025-12-06 223043 2.png)
+
 ## Operation
 - Dependencies: **tkinter**, **unittest** # Both libraries are included with standard Python installations.
 ```python
