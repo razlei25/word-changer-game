@@ -7,10 +7,11 @@ Run the program in `word_changer_game_GUI.py`
 
 
 ## Example
-Start:
+
 ![Start of game example](images/Screenshot%202025-12-06%20223126%201.png)
-End:
+
 ![End of game example](images/Screenshot%202025-12-06%20223043%202.png)
+
 
 ## Operation
 - Dependencies: **tkinter**, **unittest** # Both libraries are included with standard Python installations
